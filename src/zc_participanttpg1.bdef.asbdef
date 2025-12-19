@@ -1,0 +1,17 @@
+projection;
+strict ( 2 );
+use draft;
+
+// HIER IST DIE PROJECTION VIEW DER ALIAS
+define behavior for ZC_PARTICIPANTTPG1 alias Participant
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Activate;
+  use action Edit;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

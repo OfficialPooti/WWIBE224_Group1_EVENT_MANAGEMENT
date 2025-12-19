@@ -1,0 +1,114 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'Registration',
+  typeNamePlural: 'Registrations',
+  title.value: 'LastName',
+  description.value: 'EventTitle'
+}
+
+annotate view ZC_REGISTRATIONTPG1 with {
+
+  /* FACETS */
+  @UI.facet: [
+    { position: 10, targetQualifier: 'RegDetails', label: 'Details', type: #FIELDGROUP_REFERENCE }
+  ]
+
+  /* ----------------------------------------------------------------------- */
+  /* 1. ACTIONS (Buttons) & REG ID                                           */
+  /* ----------------------------------------------------------------------- */
+  @UI.lineItem: [
+    // === App 2 (Hauptliste): OHNE Qualifier = Standard ===
+    { position: 10, dataAction: 'ApproveRegistration', label: 'Approve', type: #FOR_ACTION }, 
+    { position: 20, dataAction: 'RejectRegistration',  label: 'Reject',  type: #FOR_ACTION },
+    { position: 5, label: 'Reg. ID' },
+
+    // === App 1 (Event-Liste): MIT Qualifier 'EventList' (Buttons fehlen hier absichtlich) ===
+    { position: 5, label: 'Reg. ID', qualifier: 'EventList' }
+  ]
+  
+  // Detailseite: Buttons immer anzeigen
+  /* ----------------------------------------------------------------------- */
+  @UI.identification: [
+    // Buttons NUR anzeigen, wenn explizit 'Default' geladen wird (App 2)
+    { position: 10, dataAction: 'ApproveRegistration', label: 'Approve', type: #FOR_ACTION, qualifier: 'Default' },
+    { position: 20, dataAction: 'RejectRegistration',  label: 'Reject',  type: #FOR_ACTION, qualifier: 'Default' },
+    
+    // Die ID immer anzeigen (ohne Qualifier, damit sie überall sichtbar ist)
+    { position: 10, label: 'Reg. ID' }
+  ]
+  
+  @UI.fieldGroup: [{ position: 10, qualifier: 'RegDetails' }]
+  RegistrationId;
+
+  /* ----------------------------------------------------------------------- */
+  /* 2. EVENT (Spalte)                                                       */
+  /* ----------------------------------------------------------------------- */
+  @UI.selectionField: [{ position: 20 }] 
+  @UI.lineItem: [
+    { position: 20, label: 'Event' },                        // App 2 (Standard)
+    { position: 20, label: 'Event', qualifier: 'EventList' } // App 1
+  ]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'RegDetails' }]
+  EventTitle;
+
+  /* ----------------------------------------------------------------------- */
+  /* 3. NAMEN (Spalten)                                                      */
+  /* ----------------------------------------------------------------------- */
+  @UI.selectionField: [{ position: 30 }] 
+  @UI.lineItem: [
+    { position: 30, label: 'First Name' },                        // App 2
+    { position: 30, label: 'First Name', qualifier: 'EventList' } // App 1
+  ]
+  @UI.identification: [{ position: 30, label: 'First Name', hidden: true }] 
+  @UI.fieldGroup: [{ position: 30, qualifier: 'RegDetails', hidden: true }]
+  FirstName;
+
+  @UI.selectionField: [{ position: 40 }] 
+  @UI.lineItem: [
+    { position: 40, label: 'Last Name' },                        // App 2
+    { position: 40, label: 'Last Name', qualifier: 'EventList' } // App 1
+  ]
+  @UI.identification: [{ position: 40, label: 'Last Name', hidden: true }] 
+  @UI.fieldGroup: [{ position: 40, qualifier: 'RegDetails', hidden: true }]
+  LastName;
+
+  /* ----------------------------------------------------------------------- */
+  /* 4. STATUS (Mit Filter!)                                                 */
+  /* ----------------------------------------------------------------------- */
+  @UI.selectionField: [{ position: 10 }] 
+  @UI.lineItem: [
+    { position: 50 },                        // App 2
+    { position: 50, qualifier: 'EventList' } // App 1
+  ]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'RegDetails' }]
+  Status;
+
+  /* ----------------------------------------------------------------------- */
+  /* 5. REMARKS                                                              */
+  /* ----------------------------------------------------------------------- */
+  @UI.lineItem: [
+    { position: 60, label: 'Remarks' },                        // App 2
+    { position: 60, label: 'Remarks', qualifier: 'EventList' } // App 1
+  ]
+  @UI.fieldGroup: [{ position: 60, qualifier: 'RegDetails' }]
+  Remarks;
+
+  /* ----------------------------------------------------------------------- */
+  /* PARTICIPANT UUID (Auswahlfeld für Create)                               */
+  /* ----------------------------------------------------------------------- */
+  @UI.lineItem: [{ hidden: true }] 
+  @UI.fieldGroup: [{ position: 5, qualifier: 'RegDetails', label: 'Select Participant' }]
+  ParticipantUuid;
+
+  /* ----------------------------------------------------------------------- */
+  /* ADMIN DATA                                                              */
+  /* ----------------------------------------------------------------------- */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  CreatedBy;
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedAt;
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  LastChangedBy;
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedAt;
+}

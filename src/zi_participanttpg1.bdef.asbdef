@@ -1,0 +1,45 @@
+managed implementation in class zbp_participanttpg1 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_PARTICIPANTTPG1 alias Participant
+persistent table zparticipant_G1
+draft table zparticipant_g1d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  // ALLE DRAFT-AKTIONEN SIND JETZT EXPLIZIT DEFINIERT:
+  draft action Activate optimized;
+  draft action Edit;
+  draft action Resume;
+  draft action Discard; // <-- FEHLER BEHOBEN
+  draft determine action Prepare;
+
+  field ( readonly, numbering : managed ) ParticipantUuid;
+  field ( readonly ) ParticipantId, CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  field ( mandatory : create ) FirstName, LastName, Email;
+
+  determination DetermineParticipantId on modify { create; }
+
+  determination DetermineAdminData on modify { create; update; }
+
+  mapping for zparticipant_g1 corresponding
+  {
+    ParticipantUuid  = participant_uuid;
+    ParticipantId    = participant_id;
+    FirstName        = first_name;
+    LastName         = last_name;
+    Email            = email;
+    Phone            = phone;
+    CreatedBy        = created_by;
+    CreatedAt        = created_at;
+    LastChangedBy    = last_changed_by;
+    LastChangedAt    = last_changed_at;
+  }
+}

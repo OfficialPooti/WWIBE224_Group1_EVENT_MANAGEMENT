@@ -1,0 +1,98 @@
+managed implementation in class ZBP_I_EVENTTPg1 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_EventTPG1 alias Event
+persistent table zevent_g1
+draft table zevent_g1d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  association _Registrations { create; with draft; }
+
+  action OpenEvent  result [1] $self;
+  action CloseEvent result [1] $self;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft determine action Prepare
+  {
+    validation ValidateDates;
+  }
+  draft action Resume;
+
+  validation ValidateDates on save { create; }
+
+  determination DetermineEventId on modify { create; }
+  determination DetermineInitialStatus on modify { create; }
+
+  field ( readonly, numbering : managed ) EventUuid;
+  field ( readonly ) EventId, Status, StatusText, CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  field ( mandatory : create ) Title, Location, StartDate, EndDate, MaxParticipants, Description;
+
+  mapping for zevent_g1 corresponding
+  {
+    EventUuid        = event_uuid;
+    EventId          = event_id;
+    Title            = title;
+    Location         = location;
+    StartDate        = start_date;
+    EndDate          = end_date;
+    MaxParticipants  = max_participants;
+    Status           = status;
+    Description      = description;
+    CreatedBy        = created_by;
+    CreatedAt        = created_at;
+    LastChangedBy    = last_changed_by;
+    LastChangedAt    = last_changed_at;
+  }
+}
+
+define behavior for ZI_RegistrationTPG1 alias Registration
+persistent table zregistration_g1
+draft table zregistratio_g1d
+lock dependent by _Event
+authorization dependent by _Event
+{
+  update;
+  delete;
+
+  association _Event { with draft; }
+
+  // --- DAS HIER EINFÜGEN: ---
+  action ApproveRegistration result [1] $self;
+  action RejectRegistration  result [1] $self;
+  // -------------------------
+
+  determination DetermineRegistrationId on modify { create; }
+  determination DetermineInitialStatus on modify { create; }
+
+  validation ValidateMaxParticipants on save { create; }
+  validation ValidateParticipant on save { create; update; }
+
+  field ( readonly, numbering : managed ) RegistrationUuid;
+  field ( readonly ) EventUuid, RegistrationId, Status, CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  field ( mandatory ) ParticipantUuid;
+
+  mapping for zregistration_g1 corresponding
+  {
+    RegistrationUuid = registration_uuid;
+    RegistrationId   = registration_id;
+    EventUuid        = event_uuid;
+    ParticipantUuid  = participant_uuid;
+    Status           = status;
+    Remarks          = remarks;
+    CreatedBy        = created_by;
+    CreatedAt        = created_at;
+    LastChangedBy    = last_changed_by;
+    LastChangedAt    = last_changed_at;
+  }
+}

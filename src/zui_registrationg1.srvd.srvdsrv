@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition für Teilnahmen'
+define service ZUI_REGISTRATIONG1 {
+  expose ZC_EVENTTPG1        as Event;
+  expose ZC_REGISTRATIONTPG1 as Registration;
+  expose ZC_PARTICIPANTTPG1  as Participant;
+}

@@ -1,0 +1,64 @@
+@Metadata.layer: #CUSTOMER
+@UI.presentationVariant: [{
+    qualifier: 'Default',
+    text: 'Participant List',
+    sortOrder: [{ by: 'LastName', direction: #ASC }]
+}]
+@UI.headerInfo: { 
+    typeName: 'Participant', 
+    typeNamePlural: 'Participants', 
+    title.value: 'LastName', 
+    description.value: 'Email' 
+}
+annotate view ZC_PARTICIPANTTPG1 with
+{
+  /* ------------------------------------------------------ */
+  /* FACETS                                                 */
+  /* ------------------------------------------------------ */
+  @UI.facet: [
+    { position: 10, targetQualifier: 'Details', label: 'Participant Details', type: #FIELDGROUP_REFERENCE },
+    { position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE }
+  ]
+  
+  /* ------------------------------------------------------ */
+  /* FIELDS & LINE ITEMS (Ohne Create-Action)               */
+  /* ------------------------------------------------------ */
+  
+  // ID
+  @UI.lineItem: [{ position: 10, label: 'ID' }] 
+  @UI.identification: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Details' }]
+  ParticipantId;
+
+  // Vorname 
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Details' }]
+  FirstName;
+  
+  // Nachname
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Details' }]
+  LastName;
+
+  // E-Mail
+  @UI.identification: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Details' }]
+  Email;
+
+  // Telefon
+  @UI.identification: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'Details' }]
+  Phone;
+  
+  /* ADMIN DATA */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
+  CreatedBy;
+  @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]
+  CreatedAt;
+  @UI.fieldGroup: [{ position: 30, qualifier: 'AdminData' }]
+  LastChangedBy;
+  @UI.fieldGroup: [{ position: 40, qualifier: 'AdminData' }]
+  LastChangedAt;
+}
