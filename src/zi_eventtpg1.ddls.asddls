@@ -19,7 +19,6 @@ define root view entity ZI_EventTPG1
       EndDate,
       MaxParticipants,
       Status,
-      /* berechneter Text zum Status */
       cast(
         case Status
           when 'P' then 'Planned'
@@ -30,12 +29,10 @@ define root view entity ZI_EventTPG1
       ) as StatusText,
       Description,
 
-      /* Administrative Data */
       CreatedBy,
       CreatedAt,
       LastChangedBy,
       LastChangedAt,
 
-      /* Associations */
       _Registrations
 }

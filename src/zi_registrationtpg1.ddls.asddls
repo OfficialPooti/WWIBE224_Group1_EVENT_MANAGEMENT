@@ -19,13 +19,11 @@ define view entity ZI_RegistrationTPG1
       Status            as Status,
       Remarks           as Remarks,
 
-      /* Administrative Data */
       CreatedBy,
       CreatedAt,
       LastChangedBy,
       LastChangedAt,
 
-      /* Associations */
       _Event,
       _Participant
 }

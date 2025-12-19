@@ -12,11 +12,9 @@ define behavior for ZC_EVENTTPG1 alias Event
 
   use association _Registrations { create; with draft; }
 
-  // Actions für das Event
   use action OpenEvent;
   use action CloseEvent;
 
-  // Draft Actions
   use action Edit;
   use action Activate;
   use action Discard;
@@ -31,7 +29,6 @@ define behavior for ZC_REGISTRATIONTPG1 alias Registration
 
   use association _Event { with draft; }
 
-  // Actions für die Registrierung
   use action ApproveRegistration;
   use action RejectRegistration;
 }

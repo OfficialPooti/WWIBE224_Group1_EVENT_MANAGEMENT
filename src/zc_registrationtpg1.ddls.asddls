@@ -15,7 +15,6 @@ define view entity ZC_REGISTRATIONTPG1
     @EndUserText.label: 'Event UUID'
     EventUuid,
  
-    /* VALUE HELP CONFIGURATION */
     @Consumption.valueHelpDefinition: [ {
         entity: {
             name: 'ZC_PARTICIPANTTP',
@@ -33,14 +32,11 @@ define view entity ZC_REGISTRATIONTPG1
     @Search.defaultSearchElement: true 
     Remarks,
     
-    /* Administrative Data */
     CreatedBy,
     CreatedAt,
     LastChangedBy,
     LastChangedAt,
-   
-    /* NEUE SPALTEN (Fetched Data) */
-    
+       
     @EndUserText.label: 'First Name'
     @Search.defaultSearchElement: true 
     @Search.fuzzinessThreshold: 0.7
@@ -56,8 +52,6 @@ define view entity ZC_REGISTRATIONTPG1
     @Search.fuzzinessThreshold: 0.7
     _Event.Title as EventTitle,
     
-    /* Associations Definitions */
-
     _Event : redirected to parent ZC_EVENTTPG1,
 
 

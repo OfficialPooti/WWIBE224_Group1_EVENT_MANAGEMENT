@@ -38,7 +38,6 @@ define root view entity ZC_EVENTTPG1
       @EndUserText.label: 'Description'
       Description,
       
-      /* Admin Data */
       @EndUserText.label: 'Created By'
       CreatedBy,
       @EndUserText.label: 'Created At'
@@ -48,6 +47,5 @@ define root view entity ZC_EVENTTPG1
       @EndUserText.label: 'Last Changed At'
       LastChangedAt,
       
-      /* Associations */
       _Registrations : redirected to composition child ZC_REGISTRATIONTPG1
 }

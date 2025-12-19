@@ -7,7 +7,7 @@
     sizeCategory: #S,
     dataClass: #MIXED
 }
-define root view entity ZI_ParticipantTPG1 // <-- HIER IST 'root' HINZUGEFÜGT
+define root view entity ZI_ParticipantTPG1
   as select from ZR_PARTICIPANT
 {
   key ParticipantUuid as ParticipantUuid,
@@ -17,7 +17,6 @@ define root view entity ZI_ParticipantTPG1 // <-- HIER IST 'root' HINZUGEFÜGT
       Email            as Email,
       Phone            as Phone,
 
-      /* Administrative Data */
       CreatedBy,
       CreatedAt,
       LastChangedBy,

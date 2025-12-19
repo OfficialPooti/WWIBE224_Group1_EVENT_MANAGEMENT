@@ -66,10 +66,8 @@ authorization dependent by _Event
 
   association _Event { with draft; }
 
-  // --- DAS HIER EINFÜGEN: ---
   action ApproveRegistration result [1] $self;
   action RejectRegistration  result [1] $self;
-  // -------------------------
 
   determination DetermineRegistrationId on modify { create; }
   determination DetermineInitialStatus on modify { create; }

@@ -8,14 +8,12 @@
 
 annotate view zc_eventtpg1 with {
 
-  /* FACETS */
   @UI.facet: [
     { id: 'EventDetails', position: 10, targetQualifier: 'EventDetails', label: 'Event Details', type: #FIELDGROUP_REFERENCE },
     { id: 'AdminData', position: 20, targetQualifier: 'AdminData', label: 'Administrative Data', type: #FIELDGROUP_REFERENCE },
     { id: 'Registrations', position: 30, targetElement: '_Registrations', targetQualifier: 'EventList', label: 'Registrations', type: #LINEITEM_REFERENCE }
   ]
 
-  /* ACTIONS */
   @UI.lineItem: [
     { position: 10, dataAction: 'OpenEvent', label: 'Open Event', type: #FOR_ACTION },
     { position: 20, dataAction: 'CloseEvent', label: 'Close Event', type: #FOR_ACTION },
@@ -27,7 +25,6 @@ annotate view zc_eventtpg1 with {
     { position: 10, qualifier: 'EventDetails' } 
   ]
   
-  // 1. FILTER: EVENT ID (Bleibt drin!)
   @UI.selectionField: [{ position: 10 }] 
   @UI.fieldGroup: [{ position: 10, qualifier: 'EventDetails' }]
   eventid;
@@ -36,30 +33,23 @@ annotate view zc_eventtpg1 with {
   @UI.fieldGroup: [{ position: 15, qualifier: 'EventDetails', label: 'Event UUID' }]     
   eventuuid;
 
-  // Title (Filter entfernt)
   @UI.lineItem: [{ position: 20 }]
-  // @UI.selectionField: [{ position: 10 }] <-- GELÖSCHT
   @UI.identification: [{ position: 20, qualifier: 'EventDetails' }]
   @UI.fieldGroup: [{ position: 20, qualifier: 'EventDetails' }]
   title;
 
-  // Location (Filter entfernt)
   @UI.lineItem: [{ position: 30 }]
-  // @UI.selectionField: [{ position: 20 }] <-- GELÖSCHT
   @UI.identification: [{ position: 30, qualifier: 'EventDetails' }]
   @UI.fieldGroup: [{ position: 30, qualifier: 'EventDetails' }]
   location;
   
-  // 2. FILTER: START DATE (Bleibt drin!)
   @UI.lineItem: [{ position: 40 }]
   @UI.selectionField: [{ position: 30 }] // <-- BLEIBT
   @UI.identification: [{ position: 40, qualifier: 'EventDetails' }]
   @UI.fieldGroup: [{ position: 40, qualifier: 'EventDetails' }]
   startdate;
 
-  // End Date (Filter entfernt)
   @UI.lineItem: [{ position: 50 }]
-  // @UI.selectionField: [{ position: 40 }] <-- GELÖSCHT
   @UI.identification: [{ position: 50, qualifier: 'EventDetails' }]
   @UI.fieldGroup: [{ position: 50, qualifier: 'EventDetails' }]
   enddate;
@@ -68,7 +58,6 @@ annotate view zc_eventtpg1 with {
   @UI.fieldGroup: [{ position: 60, qualifier: 'EventDetails' }]
   maxparticipants;
 
-  // Status (Filter entfernt)
   @UI.lineItem: [{ position: 70, label: 'Status' }]
   @UI.identification: [{ position: 70, qualifier: 'EventDetails', label: 'Status' }] 
   @UI.fieldGroup: [{ position: 70, qualifier: 'EventDetails', label: 'Status' }]      
@@ -81,7 +70,6 @@ annotate view zc_eventtpg1 with {
   @UI.fieldGroup: [{ position: 80, qualifier: 'EventDetails' }]
   description;
 
-  /* ADMIN DATA */
   @UI.fieldGroup: [{ position: 10, qualifier: 'AdminData' }]
   createdby;
   @UI.fieldGroup: [{ position: 20, qualifier: 'AdminData' }]

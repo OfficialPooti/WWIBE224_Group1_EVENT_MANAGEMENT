@@ -7,6 +7,23 @@
     <MASTERLANG>E</MASTERLANG>
     <STEXT>Message Class</STEXT>
    </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZEVENTG1</ARBGB>
+     <MSGNR>001</MSGNR>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZEVENTG1</ARBGB>
+     <MSGNR>002</MSGNR>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZEVENTG1</ARBGB>
+     <MSGNR>003</MSGNR>
+    </T100>
+   </T100>
   </asx:values>
  </asx:abap>
 </abapGit>

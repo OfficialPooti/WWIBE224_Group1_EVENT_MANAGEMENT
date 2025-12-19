@@ -13,11 +13,10 @@ authorization master ( instance )
   update;
   delete;
 
-  // ALLE DRAFT-AKTIONEN SIND JETZT EXPLIZIT DEFINIERT:
   draft action Activate optimized;
   draft action Edit;
   draft action Resume;
-  draft action Discard; // <-- FEHLER BEHOBEN
+  draft action Discard;
   draft determine action Prepare;
 
   field ( readonly, numbering : managed ) ParticipantUuid;

@@ -66,7 +66,6 @@ CLASS lhc_event IMPLEMENTATION.
 
     LOOP AT events INTO DATA(ev).
 
-      " Start < Today
       IF ev-startdate < sy-datum.
         APPEND VALUE #(
           %tky = ev-%tky
@@ -78,7 +77,6 @@ CLASS lhc_event IMPLEMENTATION.
         APPEND VALUE #( %tky = ev-%tky ) TO failed-event.
       ENDIF.
 
-      " End < Start
       IF ev-enddate < ev-startdate.
         APPEND VALUE #(
           %tky = ev-%tky
@@ -141,14 +139,12 @@ CLASS lhc_registration DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS validatemaxparticipants FOR VALIDATE ON SAVE
       IMPORTING keys FOR Registration~ValidateMaxParticipants.
 
-    " HIER FEHLTE DIE VALIDATEPARTICIPANT METHODE:
     METHODS validateparticipant FOR VALIDATE ON SAVE
       IMPORTING keys FOR Registration~ValidateParticipant.
 
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
       IMPORTING keys REQUEST requested_authorizations FOR Registration RESULT result.
 
-    " Actions
     METHODS approveregistration FOR MODIFY
       IMPORTING keys FOR ACTION Registration~ApproveRegistration RESULT result.
 
@@ -284,7 +280,6 @@ CLASS lhc_registration IMPLEMENTATION.
 
   METHOD ValidateParticipant.
 
-    " 1. Daten lesen (Wichtig: Wir brauchen auch die RegistrationUuid zum Vergleich!)
     READ ENTITIES OF ZI_Eventtpg1 IN LOCAL MODE
       ENTITY Registration
       FIELDS ( EventUuid ParticipantUuid RegistrationUuid )
@@ -293,9 +288,6 @@ CLASS lhc_registration IMPLEMENTATION.
 
     LOOP AT new_registrations INTO DATA(new_reg).
 
-      " ====================================================================
-      " --- CHECK A: Mandatory Field (Verhindert leeren GUID/Initial) ---
-      " ====================================================================
       IF new_reg-ParticipantUuid IS INITIAL.
           APPEND VALUE #( %tky = new_reg-%tky ) TO failed-registration.
           APPEND VALUE #( %tky = new_reg-%tky
@@ -307,16 +299,11 @@ CLASS lhc_registration IMPLEMENTATION.
           CONTINUE.
       ENDIF.
 
-      " ====================================================================
-      " --- CHECK B: Duplicate Entry (Verhindert doppelte Anmeldung) ---
-      " ====================================================================
-
-      " Prüfe in der DB, ob es eine ANDERE Registrierung mit gleichen Daten gibt
       SELECT SINGLE FROM zregistration_g1 AS reg
         FIELDS reg~registration_uuid
         WHERE reg~event_uuid       = @new_reg-EventUuid
           AND reg~participant_uuid = @new_reg-ParticipantUuid
-          AND reg~registration_uuid <> @new_reg-RegistrationUuid " <--- WICHTIG: Mich selbst ausschließen!
+          AND reg~registration_uuid <> @new_reg-RegistrationUuid
         INTO @DATA(existing_registration).
 
       IF sy-subrc = 0.

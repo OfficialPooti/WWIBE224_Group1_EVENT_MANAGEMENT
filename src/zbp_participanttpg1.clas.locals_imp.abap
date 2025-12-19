@@ -16,8 +16,6 @@ ENDCLASS.
 CLASS lhc_participant IMPLEMENTATION.
 
   METHOD determineparticipantid.
-    " Ziel: Ermitteln der nächsten freien ParticipantId (abap.numc(5))
-    " Dies wird bei CREATE ausgeführt.
     SELECT MAX( participant_id ) FROM zparticipant_g1 INTO @DATA(max_id).
     IF max_id IS INITIAL.
       max_id = 0.
@@ -31,7 +29,6 @@ CLASS lhc_participant IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD determineadmindata.
-    " Ziel: Automatisches Füllen der Admin-Daten bei CREATE und UPDATE
 
     DATA current_user TYPE syuname.
     current_user = sy-uname.
@@ -39,7 +36,6 @@ CLASS lhc_participant IMPLEMENTATION.
     DATA current_timestamp TYPE abp_lastchange_tstmpl.
     GET TIME STAMP FIELD current_timestamp.
 
-    " Setze CreatedBy und CreatedAt nur bei neuen Einträgen
     MODIFY ENTITIES OF ZI_PARTICIPANTtpg1 IN LOCAL MODE
       ENTITY Participant
       UPDATE FIELDS ( CreatedBy CreatedAt LastChangedBy LastChangedAt )
@@ -53,7 +49,6 @@ CLASS lhc_participant IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_instance_authorizations.
-    " Default: Erlaubt alle Operationen, solange keine PFCG-Rollen geprüft werden.
   ENDMETHOD.
 
 ENDCLASS.
